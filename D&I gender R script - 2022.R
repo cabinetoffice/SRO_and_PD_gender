@@ -4,7 +4,7 @@ library(odbc)
 library(janitor)
 library(readxl)
 library(scales)
-#install.packages(gender)
+#install.packages("gender")
 library(gender)
 library(dplyr)
 #install.packages("remotes")
@@ -14,7 +14,7 @@ People <- read_xlsx("S:/GMPP Data/GMPP Standard Shared Query Set/1. New SSQS (SQ
   select(sro_first_name, pd_first_name, quarter, sro_id, pd_id)
 
 
-
+### Issue with the code on line 19 - not pulling out the right data #### 
 SRO_gender <- drop_na(distinct(select(People,-quarter)))
 SRO_gender <- (SRO_gender$sro_first_name[1], method ="ssa")
 
