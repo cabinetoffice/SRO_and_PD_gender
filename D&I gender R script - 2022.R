@@ -15,12 +15,11 @@ People <- read_xlsx("S:/GMPP Data/GMPP Standard Shared Query Set/1. New SSQS (SQ
 
 
 ### Issue with the code on line 19 - not pulling out the right data #### 
-SRO_gender <- drop_na(distinct(select(People,-quarter)))
-SRO_gender <- (SRO_gender$sro_first_name[1], method ="ssa")
+SRO_gender <- drop_na(distinct(select(People,-quarter))) 
+SRO_gender2 <- gender(SRO_gender$sro_first_name, method ="ssa")
 
-People_SRO_gender <- left_join(People, SRO_gender, by=list(x="sro_first_name", y="name")) %>% 
-  select(- idq,
-         -pd_id,
+People_SRO_gender <- left_join(People, SRO_gender2, by=list(x="sro_first_name", y="name")) %>% 
+  select(-pd_id,
          -pd_first_name,
          first_name=sro_first_name,
          id=sro_id) %>% distinct() %>% mutate(leader="SRO")
@@ -28,8 +27,7 @@ People_SRO_gender <- left_join(People, SRO_gender, by=list(x="sro_first_name", y
 PD_gender <- gender(People$pd_first_name, method ="ssa")%>% distinct()
 
 People_PD_gender <- left_join(People, PD_gender, by=list(x="pd_first_name", y="name")) %>% 
-  select(- idq,
-         -sro_id,
+  select(-sro_id,
          -sro_first_name,
          first_name=pd_first_name,
          id=pd_id) %>% distinct() %>% mutate(leader="PD")
